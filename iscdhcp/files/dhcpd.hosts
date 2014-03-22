@@ -1,0 +1,25 @@
+{%- from "iscdhcp/defaults.yaml" import rawmap with context -%}
+{%- set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('iscdhcp:lookup')) -%}
+
+{%- if datamap.config.hosts.file_prepend is defined -%}
+{{ datamap.config.hosts.file_prepend }}
+
+{% endif -%}
+
+{%- for h in salt['pillar.get']('iscdhcp:hosts')|default([]) %}
+
+# {{ h.comment|default('Host ' ~ h.name) }}
+host {{ h.name }} {
+  hardware ethernet {{ h.mac }};
+  fixed-address {{ h.ipaddr }};
+  ddns-hostname "{{ h.domain }}";
+  {%- for a in h.additional|default([]) %}
+  {{ a }};
+  {%- endfor %}
+}
+{%- endfor -%}
+
+{%- if datamap.config.hosts.file_append is defined %}
+
+{{ datamap.config.hosts.file_append }}
+{%- endif -%}

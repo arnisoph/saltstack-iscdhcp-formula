@@ -3,10 +3,34 @@ Debian:
   pkgs:
     - isc-dhcp-server
   service:
-    - isc-dhcp-server
+    name: isc-dhcp-server
+  config:
+    manage:
+      - defaults_file
+      - dhcpd
+      - hosts
+      - subnets
+    defaults_file:
+      path: /etc/default/isc-dhcp-server
+    dhcpd:
+      path: /etc/dhcp/dhcpd.conf
+      default_includes:
+        - /etc/dhcp/dhcpd.hosts
+        - /etc/dhcp/dhcpd.subnets
+    hosts:
+      path: /etc/dhcp/dhcpd.hosts
+    subnets:
+      path: /etc/dhcp/dhcpd.subnets
+#  user:
+#    name:
+#  group:
+#    name:
 RedHat:
   pkgs:
     - dhcp
   service:
     - dhcpd
+  config:
+    defaults_file:
+      path: /etc/sysconfig/dhcpd {# TODO is this correct? #}
 {% endload %}

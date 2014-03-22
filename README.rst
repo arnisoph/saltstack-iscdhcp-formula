@@ -1,8 +1,8 @@
-================
-template-formula
-================
+===============
+iscdhcp-formula
+===============
 
-Salt Stack Formula template that has dummy content to help with a quick start on a new one
+Salt Stack Formula to set up and configure ISC DHCP, the Internet Systems Consortium DHCP Server
 
 NOTICE BEFORE YOU USE
 =====================
@@ -12,9 +12,7 @@ NOTICE BEFORE YOU USE
 TODO
 ====
 
-Define tasks to complete:
-
-* use module defaults.get as soon as it gets stable
+None
 
 Instructions
 ============
@@ -31,10 +29,9 @@ Available states
 .. contents::
     :local:
 
-``template``
-------------
-
-Describe what this state does.
+``iscdhcp``
+-----------
+Installs ISC DHCP server, sets main configuration, static host entries and subnets
 
 Additional resources
 ====================
