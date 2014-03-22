@@ -1,0 +1,12 @@
+{% load_yaml as rawmap %}
+Debian:
+  pkgs:
+    - isc-dhcp-server
+  service:
+    - isc-dhcp-server
+RedHat:
+  pkgs:
+    - dhcp
+  service:
+    - dhcpd
+{% endload %}
