@@ -15,9 +15,9 @@ iscdhcp:
           - bootp
         omapi_port: 7911
         ddns_update_style: interim
-        ddns_updates: on
-        update_static_leases: on
-        use_host_decl_names: on
+        ddns_updates: "on"
+        update_static_leases: "on"
+        use_host_decl_names: "on"
         zones:
           - name: prod.be1-net.local.
             primary: 8.8.8.8
