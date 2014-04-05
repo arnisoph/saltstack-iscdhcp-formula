@@ -13,19 +13,19 @@ iscdhcp:
     - name: {{ datamap.service.name }}
     - enable: {{ datamap.service.enable|default(True) }}
     - watch:
-{% for c in datamap.config.manage %}
+{% for c in datamap.config.manage|default([]) %}
       - file: {{ datamap.config[c].path }} #TODO that doesn't look nice
 {% endfor %}
     - require:
       - pkg: iscdhcp
-{% for c in datamap.config.manage %}
+{% for c in datamap.config.manage|default([]) %}
       - file: {{ datamap.config[c].path }}
 {% endfor %}
 
 
 #TODO create dhcp dir? might be necessary for Redhat family?
 
-{% if datamap.config.defaults_file.manage|default(True) and salt['file.file_exists'](datamap.config.defaults_file.path) %}
+{% if datamap.config.defaults_file.manage|default(True) %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
 {{ datamap.config.defaults_file.path }}:
   file:
     - managed
