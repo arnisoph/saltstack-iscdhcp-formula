@@ -18,9 +18,6 @@ iscdhcp:
 {% endfor %}
     - require:
       - pkg: iscdhcp
-{% for c in datamap.config.manage|default([]) %}
-      - file: {{ datamap.config[c].path }}
-{% endfor %}
 
 
 #TODO create dhcp dir? might be necessary for Redhat family?
