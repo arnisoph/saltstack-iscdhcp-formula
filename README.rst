@@ -66,3 +66,4 @@ OS Compatibility
 Tested with:
 
 * GNU/ Linux Debian Wheezy
+* BSD/ FreeBSD 10 stable
