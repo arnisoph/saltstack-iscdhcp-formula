@@ -24,8 +24,8 @@ iscdhcp:
 #TODO create dhcp dir? might be necessary for Redhat family?
 
 {% if datamap.config.defaults_file.manage|default(True) %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
-#Support FreeBSD, added makedirs: True. Freebsd always not create dir /etc/rc.conf.d/.
 
+# FreeBSD does not create dir /etc/rc.conf.d/
 {{ datamap.config.defaults_file.path }}:
   file:
     - managed

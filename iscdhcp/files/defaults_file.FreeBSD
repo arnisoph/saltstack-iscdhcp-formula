@@ -1,2 +1,2 @@
-#       Separate multiple interfaces with spaces, e.g. "eth0 eth1".
-dhcpd_ifaces="{% for i in salt['pillar.get']('iscdhcp:listen_interfaces', []) %} {{ i }}{%- endfor %}"
+# Separate multiple interfaces with spaces, e.g. "eth0 eth1".
+dhcpd_ifaces="{% for i in salt['pillar.get']('iscdhcp:listen_interfaces', []) %}{{ i }} {% endfor %}"
