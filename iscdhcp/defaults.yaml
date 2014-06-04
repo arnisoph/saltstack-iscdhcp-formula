@@ -33,4 +33,30 @@ RedHat:
   config:
     defaults_file:
       path: /etc/sysconfig/dhcpd {# TODO is this correct? #}
+FreeBSD:
+  pkgs:
+    - isc-dhcp42-server 
+  service:
+    name: isc-dhcpd 
+  config:
+    manage:
+      - defaults_file
+      - dhcpd
+      - hosts
+      - subnets
+    defaults_file:
+      path: /etc/rc.conf.d/dhcpd
+      group: wheel
+    dhcpd:
+      path: /usr/local/etc/dhcpd.conf
+      default_includes:
+        - /usr/local/etc/dhcpd.hosts
+        - /usr/local/etc/dhcpd.subnets
+      group: wheel
+    hosts:
+      path: /usr/local/etc/dhcpd.hosts
+      group: wheel
+    subnets:
+      path: /usr/local/etc/dhcpd.subnets
+      group: wheel
 {% endload %}

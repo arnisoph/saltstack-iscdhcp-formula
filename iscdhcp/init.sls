@@ -1,3 +1,4 @@
+# vim: sts=2 ts=2 sw=2 et ai
 {% from "iscdhcp/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('iscdhcp:lookup')) %}
 
@@ -23,9 +24,12 @@ iscdhcp:
 #TODO create dhcp dir? might be necessary for Redhat family?
 
 {% if datamap.config.defaults_file.manage|default(True) %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
+#Support FreeBSD, added makedirs: True. Freebsd always not create dir /etc/rc.conf.d/.
+
 {{ datamap.config.defaults_file.path }}:
   file:
     - managed
+    - makedirs: True
     - source: {{ datamap.config.defaults_file.template_path|default('salt://iscdhcp/files/defaults_file.' ~ salt['grains.get']('os_family')) }}
     - template: {{ datamap.config.defaults_file.template_renderer|default('jinja') }}
     - mode: {{ datamap.config.defaults_file.mode|default('644') }}
