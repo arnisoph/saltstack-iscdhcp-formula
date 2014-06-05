@@ -12,7 +12,7 @@
 host {{ h.name }} {
   hardware ethernet {{ h.mac }};
   fixed-address {{ h.ipaddr }};
-  ddns-hostname "{{ h.domain }}";
+  ddns-hostname "{{ h.domain|default(h.name) }}";
   {%- for a in h.additional|default([]) %}
   {{ a }};
   {%- endfor %}
