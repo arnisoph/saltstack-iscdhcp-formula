@@ -21,8 +21,10 @@ iscdhcp:
         zones:
           - name: prod.be1-net.local.
             primary: 8.8.8.8
+            key: rndc-key
           - name: dev.be1-net.local.
             primary: 8.8.4.4
+            key: rndc-key
         file_prepend: |
             #a
             #b
