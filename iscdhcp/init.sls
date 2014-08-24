@@ -20,7 +20,7 @@ iscdhcp:
       - pkg: iscdhcp
 
 
-#TODO create dhcp dir? might be necessary for Redhat family?
+#TODO create dhcp dir? might be necessary for RedHat family?
 
 {% if datamap.config.defaults_file.manage|default(True) %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
 
