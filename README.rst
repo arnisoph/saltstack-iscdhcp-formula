@@ -2,6 +2,9 @@
 iscdhcp-formula
 ===============
 
+.. image:: https://api.flattr.com/button/flattr-badge-large.png
+    :target: https://flattr.com/submit/auto?user_id=bechtoldt&url=https%3A%2F%2Fgithub.com%2Fbechtoldt%2Fiscdhcp-formula
+
 Salt Stack Formula to set up and configure ISC DHCP, the Internet Systems Consortium DHCP Server
 
 NOTICE BEFORE YOU USE
