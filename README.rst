@@ -70,3 +70,10 @@ Tested with:
 
 * GNU/ Linux Debian Wheezy
 * BSD/ FreeBSD 10 stable
+
+AUTHORS
+-------
+
+Please add yourself too when contributing (sorted alphabetically)!
+
+* Arnold Bechtoldt <mail@arnoldbechtoldt.com>
