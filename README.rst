@@ -72,7 +72,7 @@ Tested with:
 * BSD/ FreeBSD 10 stable
 
 AUTHORS
--------
+=======
 
 Please add yourself too when contributing (sorted alphabetically)!
 
