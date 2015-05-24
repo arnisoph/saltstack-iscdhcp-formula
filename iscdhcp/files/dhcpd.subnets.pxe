@@ -1,0 +1,44 @@
+{%- from "iscdhcp/defaults.yaml" import rawmap with context -%}
+{%- set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('iscdhcp:lookup')) -%}
+
+{%- if datamap.config.pxe_subnets.file_prepend is defined -%}
+{{ datamap.config.pxe_subnets.file_prepend }}
+
+{% endif -%}
+
+{%- for s in salt['pillar.get']('iscdhcp:pxe_subnets')|default([]) %}
+
+# {{ s.comment|default('Subnet ' ~ s.network) }}
+subnet {{ s.network }} netmask {{ s.netmask }} {
+  {%- for p in s.pools|default([]) %}
+  # {{ p.comment|default('Pool') }}
+  pool {
+  {%- for setting in p.settings|default([]) %}
+    {{ setting }};
+  {%- endfor %}
+  }
+  {% endfor %}
+  range {{ s.range }};
+  option subnet-mask {{ s.netmask }};
+  option routers {{ s.routers }};
+  ddns-domainname "{{ s.ddns_domainname }}";
+  ddns-updates {{ s.ddns_updates }};
+  do-forward-updates {{ s.do_forward_updates }};
+  if substring (option vendor-class-identifier, 0, 9) = "PXEClient" {
+    if exists user-class and option user-class = "gPXE"
+      { filename "tftp://{{ s.tftp_server }}/pxelinux.0" ; }
+    elsif exists user-class and option user-class = "iPXE"
+      { filename "tftp://{{ s.tftp_server }}/gpxelinux.0" ; }
+    else
+      { filename "gpxelinux.0" ; }
+    } 
+  {%- for a in s.additional|default([]) %}
+  {{ a }};
+  {%- endfor %}
+}
+{%- endfor -%}
+
+{%- if datamap.config.pxe_subnets.file_append is defined %}
+
+{{ datamap.config.pxe_subnets.file_append }}
+{%- endif -%}

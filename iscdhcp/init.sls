@@ -33,6 +33,8 @@ iscdhcp:
     - mode: {{ datamap.config.defaults_file.mode|default('644') }}
     - user: {{ datamap.config.defaults_file.user|default('root') }}
     - group: {{ datamap.config.defaults_file.group|default('root') }}
+    - require_in:
+      - pkg: iscdhcp
 {% endif %}
 
 {% if datamap.config.dhcpd.manage|default(True) %}
@@ -62,6 +64,17 @@ iscdhcp:
   file:
     - managed
     - source: {{ datamap.config.subnets.template_path|default('salt://iscdhcp/files/dhcpd.subnets') }}
+    - template: {{ datamap.config.subnets.template_renderer|default('jinja') }}
+    - mode: {{ datamap.config.subnets.mode|default('644') }}
+    - user: {{ datamap.config.subnets.user|default('root') }}
+    - group: {{ datamap.config.subnets.group|default('root') }}
+{% endif %}
+
+{% if datamap.config.pxe_subnets.manage|default(True) %}
+{{ datamap.config.pxe_subnets.path }}:
+  file:
+    - managed
+    - source: {{ datamap.config.subnets.template_path|default('salt://iscdhcp/files/dhcpd.subnets.pxe') }}
     - template: {{ datamap.config.subnets.template_renderer|default('jinja') }}
     - mode: {{ datamap.config.subnets.mode|default('644') }}
     - user: {{ datamap.config.subnets.user|default('root') }}

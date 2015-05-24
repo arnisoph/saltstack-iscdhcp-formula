@@ -10,4 +10,4 @@
 
 # On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
 #       Separate multiple interfaces with spaces, e.g. "eth0 eth1".
-INTERFACES="{% for i in salt['pillar.get']('iscdhcp:listen_interfaces', []) %}{{ i }} {% endfor %}"
+INTERFACES="{{ ' '.join(salt['pillar.get']('iscdhcp:listen_interfaces', [])) }}"
