@@ -47,6 +47,7 @@ RedHat:
       - subnets
       - pxe_subnets
     dhcpd:
+      log_facility: daemon
       path: /etc/dhcp/dhcpd.conf
       default_includes:
         - /etc/dhcp/dhcpd.hosts
