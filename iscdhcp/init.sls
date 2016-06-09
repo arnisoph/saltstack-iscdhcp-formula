@@ -21,7 +21,7 @@ iscdhcp:
 
 #TODO create dhcp dir? might be necessary for RedHat family?
 
-{% if datamap.config.defaults_file.manage|default(True) %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
+{% if 'defaults_file' in datamap.config.manage %} {# and salt['file.file_exists'](datamap.config.defaults_file.path) #}
 
 # FreeBSD does not create dir /etc/rc.conf.d/
 {{ datamap.config.defaults_file.path }}:
@@ -37,7 +37,7 @@ iscdhcp:
       - pkg: iscdhcp
 {% endif %}
 
-{% if datamap.config.dhcpd.manage|default(True) %}
+{% if 'dhcpd' in datamap.config.manage %}
 {{ datamap.config.dhcpd.path }}:
   file:
     - managed
@@ -48,7 +48,7 @@ iscdhcp:
     - group: {{ datamap.config.dhcpd.group|default('root') }}
 {% endif %}
 
-{% if datamap.config.hosts.manage|default(True)  %}
+{% if 'hosts' in datamap.config.manage %}
 {{ datamap.config.hosts.path }}:
   file:
     - managed
@@ -59,7 +59,7 @@ iscdhcp:
     - group: {{ datamap.config.hosts.group|default('root') }}
 {% endif %}
 
-{% if datamap.config.subnets.manage|default(True) %}
+{% if 'subnets' in datamap.config.manage %}
 {{ datamap.config.subnets.path }}:
   file:
     - managed
@@ -70,7 +70,7 @@ iscdhcp:
     - group: {{ datamap.config.subnets.group|default('root') }}
 {% endif %}
 
-{% if datamap.config.pxe_subnets.manage|default(True) %}
+{% if 'pxe_subnets' in datamap.config.manage %}
 {{ datamap.config.pxe_subnets.path }}:
   file:
     - managed
