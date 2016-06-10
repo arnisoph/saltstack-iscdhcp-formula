@@ -39,7 +39,7 @@ RedHat:
       path: /etc/sysconfig/dhcpd {# TODO is this correct? #}
 FreeBSD:
   pkgs:
-    - isc-dhcp42-server 
+    - isc-dhcp43-server
   service:
     name: isc-dhcpd 
   config:
