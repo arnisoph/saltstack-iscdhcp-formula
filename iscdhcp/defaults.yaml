@@ -31,12 +31,36 @@ Debian:
 #    name:
 RedHat:
   pkgs:
+    - dhcp-common
     - dhcp
+    - dhcp-libs
   service:
-    - dhcpd
+    name: dhcpd
   config:
     defaults_file:
-      path: /etc/sysconfig/dhcpd {# TODO is this correct? #}
+      path: {% if salt['grains.get']('osmajorrelease') == '7' %}/usr/lib/systemd/system/dhcpd.service{% else %}/etc/sysconfig/dhcpd{% endif %}
+    manage:
+      - defaults_file
+      - dhcpd
+      - failover
+      - hosts
+      - subnets
+      - pxe_subnets
+    dhcpd:
+      path: /etc/dhcp/dhcpd.conf
+      default_includes:
+        - /etc/dhcp/dhcpd.hosts
+        - /etc/dhcp/dhcpd.failover
+        - /etc/dhcp/dhcpd.subnets
+        - /etc/dhcp/dhcpd.subnets.pxe
+    failover:
+      path: /etc/dhcp/dhcpd.failover
+    hosts:
+      path: /etc/dhcp/dhcpd.hosts
+    subnets:
+      path: /etc/dhcp/dhcpd.subnets
+    pxe_subnets:
+      path: /etc/dhcp/dhcpd.subnets.pxe
 FreeBSD:
   pkgs:
     - isc-dhcp43-server

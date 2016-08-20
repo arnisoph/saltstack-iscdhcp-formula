@@ -14,7 +14,11 @@ subnet {{ s.network }} netmask {{ s.netmask }} {
   # {{ p.comment|default('Pool') }}
   pool {
   {%- for setting in p.settings|default([]) %}
+    {% if  setting.startswith('zone') -%}
+    {{ setting }}
+    {%- else -%}
     {{ setting }};
+    {%- endif -%}
   {%- endfor %}
   }
   {% endfor %}

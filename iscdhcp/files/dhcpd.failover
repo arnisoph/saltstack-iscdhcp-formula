@@ -1,0 +1,18 @@
+{%- from "iscdhcp/defaults.yaml" import rawmap with context -%}
+{%- set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('iscdhcp:lookup')) -%}
+
+{%- for s in salt['pillar.get']('iscdhcp:failover')|default([]) %}
+failover peer "{{ s.peer }}" {
+  {%- if s.has_key('primary') -%}
+  primary;
+  mclt  {{ s.mclt|default(3600) }};
+  split {{ s.split|default(100) }};
+  {% else %}
+  secondary;
+  {% endif -%}
+  address {{ s.address }};
+  port    {{ s.port }};
+  peer address {{ s.peer_address }};
+  peer port    {{ s.peer_port }};
+}
+{% endfor %}
