@@ -48,6 +48,17 @@ iscdhcp:
     - group: {{ datamap.config.dhcpd.group|default('root') }}
 {% endif %}
 
+{% if 'failover' in datamap.config.manage %}
+{{ datamap.config.failover.path }}:
+  file:
+    - managed
+    - source:   {{ datamap.config.failover.template_path|default('salt://iscdhcp/files/dhcpd.failover') }}
+    - template: {{ datamap.config.failover.template_renderer|default('jinja') }}
+    - mode:     {{ datamap.config.failover.mode|default('644') }}
+    - user:     {{ datamap.config.failover.user|default('root') }}
+    - group:    {{ datamap.config.failover.group|default('root') }}
+{% endif %}
+
 {% if 'hosts' in datamap.config.manage %}
 {{ datamap.config.hosts.path }}:
   file:
