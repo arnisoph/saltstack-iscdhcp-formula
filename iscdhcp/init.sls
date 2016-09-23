@@ -37,6 +37,25 @@ iscdhcp:
       - pkg: iscdhcp
 {% endif %}
 
+{% if 'systemd_file' in datamap.config.manage %}
+{{ datamap.config.systemd_file.path }}:
+  file:
+    - managed
+    - makedirs: True
+    - source: {{ datamap.config.systemd_file.template_path|default('salt://iscdhcp/files/systemd_file.' ~ salt['grains.get']('os_family')) }}
+    - template: {{ datamap.config.systemd_file.template_renderer|default('jinja') }}
+    - mode: {{ datamap.config.systemd_file.mode|default('644') }}
+    - user: {{ datamap.config.systemd_file.user|default('root') }}
+    - group: {{ datamap.config.systemd_file.group|default('root') }}
+service.systemctl_reload:
+  module:
+    - wait
+    - watch:
+      - file: {{ datamap.config.systemd_file.path }}
+    - require_in:
+      - service: iscdhcp
+{% endif %}
+
 {% if 'dhcpd' in datamap.config.manage %}
 {{ datamap.config.dhcpd.path }}:
   file:

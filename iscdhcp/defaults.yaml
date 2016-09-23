@@ -38,9 +38,16 @@ RedHat:
     name: dhcpd
   config:
     defaults_file:
-      path: {% if salt['grains.get']('osmajorrelease') == '7' %}/usr/lib/systemd/system/dhcpd.service{% else %}/etc/sysconfig/dhcpd{% endif %}
+      path: /etc/sysconfig/dhcpd
+    {% if salt['grains.get']('osmajorrelease') in ['7'] %}
+    systemd_file:
+      path: /etc/systemd/system/dhcpd.service
+    {% endif %}
     manage:
       - defaults_file
+    {% if salt['grains.get']('osmajorrelease') in ['7'] %}
+      - systemd_file
+    {% endif %}
       - dhcpd
       - failover
       - hosts
